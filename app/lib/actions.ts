@@ -5,6 +5,7 @@ import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { signIn } from "@/auth";
+import { env } from "process";
 
 const InvoiceSchema = z.object({
   id: z.string(),
@@ -110,5 +111,18 @@ export async function authenticate(
       return "CredentialSignin";
     }
     throw error;
+  }
+}
+
+export async function deleteTodo(id: string): Promise<{ success: boolean }> {
+  try {
+    const res = fetch(`${env.API_URL}/todos`, {
+      method: "DELETE",
+      body: JSON.stringify(id),
+    });
+    revalidatePath("/dashboard/todos");
+    return (await res).json();
+  } catch (error) {
+    throw new Error("Failed to fetch todos");
   }
 }

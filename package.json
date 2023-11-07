@@ -5,6 +5,7 @@
     "dev": "next dev",
     "start": "next start",
     "seed": "node -r dotenv/config ./scripts/seed.js",
+    "todos-db": "node -r dotenv/config ./scripts/todos.js",
     "lint": "next lint"
   },
   "dependencies": {
