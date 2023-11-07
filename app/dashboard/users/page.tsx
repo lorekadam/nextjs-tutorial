@@ -9,7 +9,7 @@ type User = {
   // ...
 };
 
-export async function fetchUsers(): Promise<User[]> {
+async function fetchUsers(): Promise<User[]> {
   try {
     // await new Promise((resolve) => setTimeout(resolve, 3000));
     const users = fetch("https://jsonplaceholder.typicode.com/users");
