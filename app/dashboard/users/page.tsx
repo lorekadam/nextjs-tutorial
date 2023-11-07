@@ -11,6 +11,7 @@ type User = {
 
 async function fetchUsers(): Promise<User[]> {
   try {
+    // throw new Error("Error");
     // await new Promise((resolve) => setTimeout(resolve, 3000));
     const users = fetch("https://jsonplaceholder.typicode.com/users");
     return (await users).json();
@@ -42,9 +43,9 @@ export default async function Page() {
         Users
       </h1>
       <div>
-        <Suspense fallback={<div>Loading users from REST API...</div>}>
-          <UsersList />
-        </Suspense>
+        {/* <Suspense fallback={<div>Loading users from REST API...</div>}> */}
+        <UsersList />
+        {/* </Suspense> */}
       </div>
     </main>
   );
