@@ -4,6 +4,8 @@ import Link from "next/link";
 import { env } from "process";
 import { DeleteTodo } from "@/app/ui/todos/delete";
 
+export const dynamic = "force-dynamic";
+
 async function fetchTodos(): Promise<Todo[]> {
   try {
     const todos = await fetch(`${env.API_URL}/todos`, { cache: "no-store" });
