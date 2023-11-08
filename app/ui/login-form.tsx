@@ -10,16 +10,20 @@ import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import { Button } from "./button";
 import { useFormState, useFormStatus } from "react-dom";
 import { authenticate } from "@/app/lib/actions";
+import { useParams } from "next/navigation";
+import { LocaleTypes } from "@/i18n/settings";
+import { useTranslation } from "@/i18n/client";
 
 export default function LoginForm() {
+  let locale = useParams()?.locale as LocaleTypes;
+
+  const { t } = useTranslation(locale, "login");
   const [code, action] = useFormState(authenticate, undefined);
 
   return (
     <form action={action} className="space-y-3">
       <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
-        <h1 className={`${lusitana.className} mb-3 text-2xl`}>
-          Please log in to continue.
-        </h1>
+        <h1 className={`${lusitana.className} mb-3 text-2xl`}>{t("title")}</h1>
         <div className="w-full">
           <div>
             <label
@@ -46,7 +50,7 @@ export default function LoginForm() {
               className="mb-3 mt-5 block text-xs font-medium text-gray-900"
               htmlFor="password"
             >
-              Password
+              {t("password")}
             </label>
             <div className="relative">
               <input
