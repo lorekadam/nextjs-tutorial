@@ -1,21 +1,13 @@
 import { Todo } from "@/app/lib/definitions";
 import { lusitana } from "@/app/ui/fonts";
-import { unstable_noStore as noStore } from "next/cache";
 import Link from "next/link";
 import { env } from "process";
-import {
-  CheckIcon,
-  PencilIcon,
-  TrashIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
 import { DeleteTodo } from "@/app/ui/todos/delete";
 
 async function fetchTodos(): Promise<Todo[]> {
-  noStore();
   try {
-    const todos = fetch(`${env.API_URL}/todos`);
-    return (await todos).json();
+    const todos = await fetch(`${env.API_URL}/todos`, { cache: "no-store" });
+    return todos.json();
   } catch (error) {
     throw new Error("Failed to fetch todos");
   }
@@ -33,22 +25,14 @@ const TodosList = async () => {
             className="flex gap-4 border-b-2 p-2 items-center justify-between"
             key={id}
           >
-            <div className="w-[20%]">{id.substring(0, 3)}...</div>
-            <div className="w-[20%]">{name}</div>
-            <div className="w-[20%]">{description}</div>
+            <div className="w-[50px]">{id.substring(0, 5)}</div>
+            <div>{name}</div>
+            <div>{description}</div>
             <div>
-              {done ? <CheckIcon width={30} /> : <XMarkIcon width={30} />}
+              <input type="checkbox" checked={done} readOnly />
             </div>
             <div>
               <DeleteTodo id={id} />
-            </div>
-            <div>
-              <Link
-                className="flex text-white bg-green-700 p-2"
-                href={`/dashboard/todos/${id}`}
-              >
-                <PencilIcon width={30} />
-              </Link>
             </div>
           </div>
         ))

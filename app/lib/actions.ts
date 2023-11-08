@@ -116,12 +116,12 @@ export async function authenticate(
 
 export async function deleteTodo(id: string): Promise<{ success: boolean }> {
   try {
-    const res = fetch(`${env.API_URL}/todos`, {
+    const res = await fetch(`${env.API_URL}/todos`, {
       method: "DELETE",
       body: JSON.stringify(id),
     });
     revalidatePath("/dashboard/todos");
-    return (await res).json();
+    return res.json();
   } catch (error) {
     throw new Error("Failed to fetch todos");
   }
